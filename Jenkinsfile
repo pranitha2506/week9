@@ -22,12 +22,10 @@ pipeline {
                 
             }
         }
-        stage('Test Kubernetes') {
+        stage('Deploy to Kubernetes') {
     steps {
-        bat 'echo KUBECONFIG=%KUBECONFIG%'
-        bat 'dir C:\\ProgramData\\Jenkins\\.kube'
-        bat 'kubectl config current-context'
-        bat 'kubectl get nodes'
+        bat 'set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config && kubectl apply -f deployment.yaml --validate=false'
+        bat 'set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config && kubectl apply -f service.yaml'
     }
 }
     }
