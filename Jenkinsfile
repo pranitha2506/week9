@@ -22,13 +22,14 @@ pipeline {
                 
             }
         }
-        stage('Deploy to Kubernetes') { 
-            steps { 
-                    // apply deployment & service 
-                    bat 'kubectl apply -f deployment.yaml --validate=false' 
-                    bat 'kubectl apply -f service.yaml' 
-            } 
-        }
+        stage('Test Kubernetes') {
+    steps {
+        bat 'echo KUBECONFIG=%KUBECONFIG%'
+        bat 'dir C:\\ProgramData\\Jenkins\\.kube'
+        bat 'kubectl config current-context'
+        bat 'kubectl get nodes'
+    }
+}
     }
     post {
         success {
